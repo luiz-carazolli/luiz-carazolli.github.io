@@ -16,7 +16,7 @@ SITE_URL = os.environ.get('SITE_URL', profile.get('site_url') or '').rstrip('/')
 PAPER = publications[0]
 POSTS = sorted((p for p in read('posts') if p.get('published', True)), key=lambda p: (date.fromisoformat(p['date']), p.get('order', 0)), reverse=True)
 LATEST_POST = POSTS[0]
-NAV = [('index.html','Home'),('projects.html','Projects & Code'),('research.html','Research'),('cv.html','CV'),('blog.html','Blog')]
+NAV = [('index.html','Home'),('research.html','Research'),('projects.html','Projects & Code'),('cv.html','CV'),('blog.html','Blog')]
 
 def social():
     links = [(profile.get(k),label) for k,label in [('github','GitHub'),('scholar','Google Scholar'),('lattes','Lattes'),('linkedin','LinkedIn')]]
