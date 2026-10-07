@@ -1,0 +1,121 @@
+feature_1,feature_2,feature_1_display,feature_2_display,interaction_strength
+h1_total_persistence,h0_entropy,$H_1$ Total Persistence,$H_0$ Persistence Entropy,0.15075947
+h0_entropy,h1_mean_persistence,$H_0$ Persistence Entropy,$H_1$ Mean Persistence,0.12821063
+h1_total_persistence,h1_std_persistence,$H_1$ Total Persistence,$H_1$ Std Persistence,0.072452985
+h1_total_persistence,h1_mean_persistence,$H_1$ Total Persistence,$H_1$ Mean Persistence,0.06385289
+h0_entropy,h1_std_persistence,$H_0$ Persistence Entropy,$H_1$ Std Persistence,0.06354983
+h0_total_persistence,h1_mean_persistence,$H_0$ Total Persistence,$H_1$ Mean Persistence,0.051985778
+total_feature_count,h0_entropy,Total Feature Count,$H_0$ Persistence Entropy,0.050666355
+h1_mean_persistence,h1_std_persistence,$H_1$ Mean Persistence,$H_1$ Std Persistence,0.04988804
+h0_entropy,h0_mean_persistence,$H_0$ Persistence Entropy,$H_0$ Mean Persistence,0.046704337
+h0_entropy,h1_entropy,$H_0$ Persistence Entropy,$H_1$ Persistence Entropy,0.045745593
+h0_count,h1_total_persistence,$H_0$ Feature Count,$H_1$ Total Persistence,0.045708466
+h1_count,h0_entropy,$H_1$ Feature Count,$H_0$ Persistence Entropy,0.04419931
+h0_mean_persistence,h1_mean_persistence,$H_0$ Mean Persistence,$H_1$ Mean Persistence,0.04254215
+h0_entropy,total_entropy,$H_0$ Persistence Entropy,Total Persistence Entropy,0.041925833
+h1_count,h1_mean_persistence,$H_1$ Feature Count,$H_1$ Mean Persistence,0.038832158
+h0_count,h0_entropy,$H_0$ Feature Count,$H_0$ Persistence Entropy,0.037279457
+h0_total_persistence,h0_entropy,$H_0$ Total Persistence,$H_0$ Persistence Entropy,0.03587101
+h0_count,h1_mean_persistence,$H_0$ Feature Count,$H_1$ Mean Persistence,0.035564605
+total_persistence,h1_mean_persistence,Total Persistence,$H_1$ Mean Persistence,0.03549932
+h1_max_persistence,h1_std_persistence,$H_1$ Max Persistence,$H_1$ Std Persistence,0.034644514
+h0_total_persistence,h1_total_persistence,$H_0$ Total Persistence,$H_1$ Total Persistence,0.03352454
+h1_entropy,h1_mean_persistence,$H_1$ Persistence Entropy,$H_1$ Mean Persistence,0.03202808
+h1_count,h1_total_persistence,$H_1$ Feature Count,$H_1$ Total Persistence,0.031465583
+h1_total_persistence,max_persistence,$H_1$ Total Persistence,Max Persistence,0.030459283
+total_persistence,h0_entropy,Total Persistence,$H_0$ Persistence Entropy,0.029833902
+total_feature_count,h1_total_persistence,Total Feature Count,$H_1$ Total Persistence,0.029780338
+h1_count,h1_entropy,$H_1$ Feature Count,$H_1$ Persistence Entropy,0.028975671
+h1_count,total_entropy,$H_1$ Feature Count,Total Persistence Entropy,0.028385336
+h0_std_persistence,h1_std_persistence,$H_0$ Std Persistence,$H_1$ Std Persistence,0.02824009
+total_feature_count,h1_entropy,Total Feature Count,$H_1$ Persistence Entropy,0.028044235
+h1_entropy,h1_std_persistence,$H_1$ Persistence Entropy,$H_1$ Std Persistence,0.027230132
+h1_max_persistence,h0_entropy,$H_1$ Max Persistence,$H_0$ Persistence Entropy,0.0269495
+total_feature_count,total_entropy,Total Feature Count,Total Persistence Entropy,0.026463803
+h1_total_persistence,total_persistence,$H_1$ Total Persistence,Total Persistence,0.026319368
+h0_total_persistence,h1_entropy,$H_0$ Total Persistence,$H_1$ Persistence Entropy,0.026294595
+h1_entropy,h0_mean_persistence,$H_1$ Persistence Entropy,$H_0$ Mean Persistence,0.025988787
+h1_entropy,total_entropy,$H_1$ Persistence Entropy,Total Persistence Entropy,0.025913669
+total_entropy,h1_mean_persistence,Total Persistence Entropy,$H_1$ Mean Persistence,0.025912385
+h0_max_persistence,h0_entropy,$H_0$ Max Persistence,$H_0$ Persistence Entropy,0.025582284
+h0_entropy,h0_std_persistence,$H_0$ Persistence Entropy,$H_0$ Std Persistence,0.02512612
+h1_total_persistence,total_entropy,$H_1$ Total Persistence,Total Persistence Entropy,0.024976276
+h0_max_persistence,h0_std_persistence,$H_0$ Max Persistence,$H_0$ Std Persistence,0.024838317
+h0_count,h1_max_persistence,$H_0$ Feature Count,$H_1$ Max Persistence,0.024630116
+h0_total_persistence,total_persistence,$H_0$ Total Persistence,Total Persistence,0.024080232
+h1_max_persistence,h1_mean_persistence,$H_1$ Max Persistence,$H_1$ Mean Persistence,0.024068508
+h0_count,total_feature_count,$H_0$ Feature Count,Total Feature Count,0.02401957
+h1_mean_persistence,h0_std_persistence,$H_1$ Mean Persistence,$H_0$ Std Persistence,0.023954814
+max_persistence,h1_mean_persistence,Max Persistence,$H_1$ Mean Persistence,0.023871396
+max_persistence,h0_entropy,Max Persistence,$H_0$ Persistence Entropy,0.023506556
+h0_count,h1_std_persistence,$H_0$ Feature Count,$H_1$ Std Persistence,0.022846906
+h0_max_persistence,h1_mean_persistence,$H_0$ Max Persistence,$H_1$ Mean Persistence,0.022227522
+h0_count,h0_total_persistence,$H_0$ Feature Count,$H_0$ Total Persistence,0.022185734
+h0_mean_persistence,h1_std_persistence,$H_0$ Mean Persistence,$H_1$ Std Persistence,0.021638919
+h0_count,total_entropy,$H_0$ Feature Count,Total Persistence Entropy,0.021435771
+h1_total_persistence,h0_mean_persistence,$H_1$ Total Persistence,$H_0$ Mean Persistence,0.021381868
+h0_mean_persistence,h0_std_persistence,$H_0$ Mean Persistence,$H_0$ Std Persistence,0.021257538
+h0_count,h1_entropy,$H_0$ Feature Count,$H_1$ Persistence Entropy,0.021057256
+h1_total_persistence,h0_max_persistence,$H_1$ Total Persistence,$H_0$ Max Persistence,0.020926168
+h1_max_persistence,h1_entropy,$H_1$ Max Persistence,$H_1$ Persistence Entropy,0.020920789
+h1_entropy,h0_std_persistence,$H_1$ Persistence Entropy,$H_0$ Std Persistence,0.020537587
+h1_total_persistence,h1_max_persistence,$H_1$ Total Persistence,$H_1$ Max Persistence,0.019827798
+h0_count,max_persistence,$H_0$ Feature Count,Max Persistence,0.01972236
+max_persistence,h0_mean_persistence,Max Persistence,$H_0$ Mean Persistence,0.019497693
+total_feature_count,h0_max_persistence,Total Feature Count,$H_0$ Max Persistence,0.018949874
+h0_total_persistence,h0_mean_persistence,$H_0$ Total Persistence,$H_0$ Mean Persistence,0.01876958
+total_feature_count,total_persistence,Total Feature Count,Total Persistence,0.018576782
+total_feature_count,h1_mean_persistence,Total Feature Count,$H_1$ Mean Persistence,0.018094985
+h1_count,h0_max_persistence,$H_1$ Feature Count,$H_0$ Max Persistence,0.018094597
+h0_total_persistence,total_entropy,$H_0$ Total Persistence,Total Persistence Entropy,0.017961742
+h0_total_persistence,h0_max_persistence,$H_0$ Total Persistence,$H_0$ Max Persistence,0.017934836
+h1_total_persistence,h0_std_persistence,$H_1$ Total Persistence,$H_0$ Std Persistence,0.01788891
+h1_count,total_feature_count,$H_1$ Feature Count,Total Feature Count,0.017773883
+h1_total_persistence,h1_entropy,$H_1$ Total Persistence,$H_1$ Persistence Entropy,0.017675608
+h0_max_persistence,h1_std_persistence,$H_0$ Max Persistence,$H_1$ Std Persistence,0.017657343
+h0_total_persistence,h0_std_persistence,$H_0$ Total Persistence,$H_0$ Std Persistence,0.017307626
+h1_max_persistence,max_persistence,$H_1$ Max Persistence,Max Persistence,0.017280297
+h0_max_persistence,h0_mean_persistence,$H_0$ Max Persistence,$H_0$ Mean Persistence,0.017081162
+h0_total_persistence,max_persistence,$H_0$ Total Persistence,Max Persistence,0.016760265
+total_persistence,h0_max_persistence,Total Persistence,$H_0$ Max Persistence,0.016694287
+total_feature_count,max_persistence,Total Feature Count,Max Persistence,0.01648488
+h0_max_persistence,h1_entropy,$H_0$ Max Persistence,$H_1$ Persistence Entropy,0.016427882
+total_persistence,h1_std_persistence,Total Persistence,$H_1$ Std Persistence,0.016357837
+max_persistence,h0_std_persistence,Max Persistence,$H_0$ Std Persistence,0.016194677
+max_persistence,h1_entropy,Max Persistence,$H_1$ Persistence Entropy,0.016139064
+h1_count,total_persistence,$H_1$ Feature Count,Total Persistence,0.01601078
+h0_total_persistence,h1_std_persistence,$H_0$ Total Persistence,$H_1$ Std Persistence,0.015704805
+total_persistence,h0_mean_persistence,Total Persistence,$H_0$ Mean Persistence,0.015543153
+max_persistence,total_entropy,Max Persistence,Total Persistence Entropy,0.015536557
+h1_count,h1_std_persistence,$H_1$ Feature Count,$H_1$ Std Persistence,0.015458724
+h0_count,h0_max_persistence,$H_0$ Feature Count,$H_0$ Max Persistence,0.015370431
+h1_count,max_persistence,$H_1$ Feature Count,Max Persistence,0.015158413
+total_persistence,h1_entropy,Total Persistence,$H_1$ Persistence Entropy,0.015139866
+max_persistence,h1_std_persistence,Max Persistence,$H_1$ Std Persistence,0.01512012
+total_feature_count,h1_max_persistence,Total Feature Count,$H_1$ Max Persistence,0.015065776
+total_persistence,max_persistence,Total Persistence,Max Persistence,0.015047485
+h1_max_persistence,h0_mean_persistence,$H_1$ Max Persistence,$H_0$ Mean Persistence,0.01467383
+total_entropy,h0_std_persistence,Total Persistence Entropy,$H_0$ Std Persistence,0.014537822
+h0_count,h0_std_persistence,$H_0$ Feature Count,$H_0$ Std Persistence,0.014299601
+total_entropy,h0_mean_persistence,Total Persistence Entropy,$H_0$ Mean Persistence,0.014275353
+h0_max_persistence,h1_max_persistence,$H_0$ Max Persistence,$H_1$ Max Persistence,0.013996111
+total_feature_count,h0_std_persistence,Total Feature Count,$H_0$ Std Persistence,0.013904486
+h0_max_persistence,max_persistence,$H_0$ Max Persistence,Max Persistence,0.013637753
+h0_total_persistence,h1_max_persistence,$H_0$ Total Persistence,$H_1$ Max Persistence,0.013598816
+total_feature_count,h1_std_persistence,Total Feature Count,$H_1$ Std Persistence,0.013302511
+h1_max_persistence,h0_std_persistence,$H_1$ Max Persistence,$H_0$ Std Persistence,0.013079589
+total_feature_count,h0_total_persistence,Total Feature Count,$H_0$ Total Persistence,0.012881657
+h0_count,h1_count,$H_0$ Feature Count,$H_1$ Feature Count,0.012797029
+h0_count,total_persistence,$H_0$ Feature Count,Total Persistence,0.012746123
+h1_count,h0_mean_persistence,$H_1$ Feature Count,$H_0$ Mean Persistence,0.012716677
+total_persistence,h0_std_persistence,Total Persistence,$H_0$ Std Persistence,0.01256317
+h1_count,h1_max_persistence,$H_1$ Feature Count,$H_1$ Max Persistence,0.01255875
+total_persistence,total_entropy,Total Persistence,Total Persistence Entropy,0.012458958
+total_entropy,h1_std_persistence,Total Persistence Entropy,$H_1$ Std Persistence,0.012362232
+h1_max_persistence,total_entropy,$H_1$ Max Persistence,Total Persistence Entropy,0.011921412
+h1_count,h0_total_persistence,$H_1$ Feature Count,$H_0$ Total Persistence,0.011750045
+total_feature_count,h0_mean_persistence,Total Feature Count,$H_0$ Mean Persistence,0.011654004
+h0_max_persistence,total_entropy,$H_0$ Max Persistence,Total Persistence Entropy,0.011261844
+total_persistence,h1_max_persistence,Total Persistence,$H_1$ Max Persistence,0.010714141
+h0_count,h0_mean_persistence,$H_0$ Feature Count,$H_0$ Mean Persistence,0.010708139
+h1_count,h0_std_persistence,$H_1$ Feature Count,$H_0$ Std Persistence,0.010674479

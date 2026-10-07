@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite this project when discussing these experiments."
+title: "The Shape of a Photograph: Persistent Homology of Real vs. AI-Generated Images"
+type: software
+authors:
+  - family-names: "de Oliveira Carazolli"
+    given-names: "Luiz Otávio"
+version: "2026-10-06-public"
+date-released: 2026-10-06
+url: "https://luiz-carazolli.github.io/projects/the-shape-of-a-photograph.html"

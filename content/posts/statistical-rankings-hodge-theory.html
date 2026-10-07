@@ -1,0 +1,139 @@
+<div class="article-layout">
+  <aside class="toc" aria-label="Article contents"><p>In this article</p><ol><li><a href="#comparisons">01 · What a rating promises</a></li><li><a href="#fixtures">02 · The fixture list</a></li><li><a href="#scores">03 · The best compromise</a></li><li><a href="#triangle">04 · Account for the triangle</a></li><li><a href="#hole">05 · The longer way around</a></li><li><a href="#hodge">06 · Where Hodge theory enters</a></li><li><a href="#references">Further reading</a></li></ol></aside>
+  <article class="prose">
+    <p>Brookfield beat Albion 3–0. A week later, Cedar beat Brookfield 3–1. Before Cedar and Albion meet, the conversation almost writes itself: if Brookfield are three goals better than Albion, and Cedar are two goals better than Brookfield, how much better are Cedar than Albion?</p>
+    <p>Five goals is the tempting answer. No football supporter would mistake that arithmetic for a reliable prediction. A red card, an injury, a change in tactics, or simply a bad afternoon can overturn it. Yet the calculation exposes an assumption that sits behind many arguments about who deserves to be ranked above whom: perhaps every team has an underlying strength, and a match tells us something about the difference between two strengths.</p>
+    <p>A league table has its own answer, based on the points teams have earned. Here we are asking a different, more demanding question. Suppose we want to use the actual scorelines, including the margins of victory, to assign each team a numerical rating. Can those ratings give a coherent account of what happened on the pitch?</p>
+    <blockquote><p>How much of a season’s results can one number per team explain—and what happens to the part it cannot?</p></blockquote>
+    <p>We will follow that question through six fictional matches. There is no need to begin with topology. The first difficulty will be a missing goal in a simple calculation. The next will come from the way the teams’ fixtures fit together. By the end, the distinction between those difficulties will lead us to Hodge theory.</p>
+
+    <h2 id="comparisons">1. What a rating promises</h2>
+    <p>Let us call the three teams Albion (A), Brookfield (B), and Cedar (C). Write \(s_A,s_B,s_C\) for their ratings, with larger values meaning stronger teams. Our simplest model says that a team’s advantage over another should be the difference of their ratings.</p>
+    <p>To connect that idea to football, we use the <em>net score</em>: goals scored by one team minus goals scored by its opponent. For an oriented edge from team \(i\) to team \(j\), set</p>
+    \[Y_{ij}=\text{goals scored by }j-\text{goals scored by }i.\]
+    <p>Thus Brookfield’s 3–0 win over Albion gives \(Y_{AB}=3\). Cedar’s 3–1 win over Brookfield gives \(Y_{BC}=2\). Reversing an edge changes the sign: \(Y_{BA}=-3\). These signed edge weights record goal margins; they are distinct from any weights we might later use to express confidence in different matches.</p>
+    <p>If our ratings explained both results exactly, they would satisfy</p>
+    \[s_B-s_A=3,\qquad s_C-s_B=2.\]
+    <p>Adding the equations makes Brookfield disappear from the calculation:</p>
+    \[s_C-s_A=(s_C-s_B)+(s_B-s_A)=2+3=5.\]
+    <p>Now Cedar and Albion play. Cedar win 5–1. That is a four-goal margin, so the third match requires \(s_C-s_A=4\). We have reached a contradiction without choosing a single rating. The indirect comparison through Brookfield says five; the direct comparison says four.</p>
+    \[Y_{AB}+Y_{BC}-Y_{AC}=3+2-4=1.\]
+    <p>The discrepancy is only one goal, and it is entirely unsurprising in football. Its mathematical significance is precise: no choice of three numbers can reproduce all three observed margins. This does not prevent us from placing Cedar above Brookfield above Albion. It prevents us from explaining the <em>sizes</em> of all the victories by differences of a single rating.</p>
+    <p>The signed sum we just calculated is called the <em>circulation</em> around the triangle. Travel from A to B, then B to C, then C back to A; the last leg contributes \(-Y_{AC}\). If every edge value were a score difference, the sum would be</p>
+    \[(s_B-s_A)+(s_C-s_B)+(s_A-s_C)=0.\]
+    <p>The same cancellation happens around any closed route. Return to the team you started with, and the total change in rating must be zero. This gives us a consistency test before we even attempt to fit the ratings.</p>
+
+    <h2 id="fixtures">2. The fixture list has a shape</h2>
+    <p>Three teams already show why an exact fit can fail. To see what else can go wrong, let us widen the competition to five fictional clubs by adding Dockside (D) and Eastbank (E). Think of an early stretch of a season, when only some pairs have met. Our entire dataset consists of the following six matches; home advantage is omitted from this deliberately simple model.</p>
+    <div class="table-wrap"><table><caption>Six fictional football matches. Each oriented edge points toward the winner.</caption><thead><tr><th scope="col">Match</th><th scope="col">Scoreline</th><th scope="col">Edge</th><th scope="col">Net score</th></tr></thead><tbody>
+      <tr data-match="AB" data-goals-i="0" data-goals-j="3"><th scope="row">Albion – Brookfield</th><td>0–3</td><td>AB</td><td>3</td></tr>
+      <tr data-match="BC" data-goals-i="1" data-goals-j="3"><th scope="row">Brookfield – Cedar</th><td>1–3</td><td>BC</td><td>2</td></tr>
+      <tr data-match="AC" data-goals-i="1" data-goals-j="5"><th scope="row">Albion – Cedar</th><td>1–5</td><td>AC</td><td>4</td></tr>
+      <tr data-match="CD" data-goals-i="1" data-goals-j="2"><th scope="row">Cedar – Dockside</th><td>1–2</td><td>CD</td><td>1</td></tr>
+      <tr data-match="DE" data-goals-i="0" data-goals-j="1"><th scope="row">Dockside – Eastbank</th><td>0–1</td><td>DE</td><td>1</td></tr>
+      <tr data-match="EA" data-goals-i="1" data-goals-j="2"><th scope="row">Eastbank – Albion</th><td>1–2</td><td>EA</td><td>1</td></tr>
+    </tbody></table></div>
+    <p>A graph keeps track of exactly what we know. Each team becomes a vertex, and each played match becomes an edge carrying its signed net score. A missing edge means the teams have not met; it does not mean they drew. We choose the displayed orientations for convenience. Nothing in the method requires every edge value to be positive.</p>
+    <figure>
+      <svg class="graph" viewBox="0 0 440 330" role="img" aria-labelledby="graph-title graph-desc">
+        <title id="graph-title">Five football teams and their observed matches</title>
+        <desc id="graph-desc">Arrows point from the losing team to the winning team and carry the winning goal margin. A to B is 3, B to C is 2, A to C is 4, C to D is 1, D to E is 1, and E to A is 1. The three matches between A, B, and C form a filled triangle. A-D and C-E have not been played.</desc>
+        <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10" fill="none"/></marker></defs>
+        <polygon class="face" points="65,155 220,35 375,155"/>
+        <g marker-end="url(#arrow)"><line x1="80" y1="143" x2="204" y2="47"/><line x1="236" y1="47" x2="359" y2="143"/><line x1="85" y1="155" x2="355" y2="155"/><line x1="375" y1="175" x2="375" y2="270"/><line x1="355" y1="290" x2="85" y2="290"/><line x1="65" y1="270" x2="65" y2="175"/></g>
+        <g text-anchor="middle" class="edge-label"><text x="130" y="85" class="edge-label">3</text><text x="310" y="85" class="edge-label">2</text><text x="220" y="145" class="edge-label">4</text><text x="400" y="230" class="edge-label">1</text><text x="220" y="315" class="edge-label">1</text><text x="40" y="230" class="edge-label">1</text></g>
+        <g><circle cx="65" cy="155" r="20"/><circle cx="220" cy="35" r="20"/><circle cx="375" cy="155" r="20"/><circle cx="375" cy="290" r="20"/><circle cx="65" cy="290" r="20"/></g>
+        <g text-anchor="middle" dominant-baseline="central"><text x="65" y="155">A</text><text x="220" y="35">B</text><text x="375" y="155">C</text><text x="375" y="290">D</text><text x="65" y="290">E</text><text x="220" y="220" class="graph-note">no A–D or C–E match</text></g>
+      </svg>
+      <figcaption>The fixture list as a graph. A = Albion, B = Brookfield, C = Cedar, D = Dockside, E = Eastbank. Each edge is labeled by the winner’s goal margin. Shading ABC records that all three pairwise matches have been played.</figcaption>
+    </figure>
+    <p>Whenever three teams have all played one another, we can perform the triangle test from the previous section. We represent that available test by filling in their triangle. Here the only such trio is ABC. The graph together with these filled triangles is our <em>comparison complex</em>.</p>
+    <blockquote><p>A filled triangle means that we have all three results needed to check consistency. It does not mean those results are consistent.</p></blockquote>
+    <p>This distinction will matter. The results tell us what is written on the edges; the fixture list determines which comparisons and consistency tests are available. For the calculations, fix the edge order \((AB,BC,AC,CD,DE,EA)\), so the six observed margins form the vector</p>
+    \[Y=(3,2,4,1,1,1).\]
+
+    <h2 id="scores">3. Find the best compromise</h2>
+    <p>We know the ratings cannot explain everything. That does not make the attempt useless. We can ask for the ratings whose predicted margins come closest to the observed ones.</p>
+    <p>Write \((d_0s)_{ij}=s_j-s_i\). The symbol \(d_0\) simply names the operation of turning one number per team into one predicted margin per match. It is called the <em>discrete gradient</em>. We choose the ratings by minimizing the total squared error:</p>
+    \[\min_s\sum_{ij\in\{AB,BC,AC,CD,DE,EA\}}\bigl(Y_{ij}-(s_j-s_i)\bigr)^2.\]
+    <p>Every match receives equal weight in this objective. The net scores remain the observed edge values; a four-goal win is an observation of four, not four times as much evidence as a one-goal win. Repeated matches or different confidence levels could motivate a weighted model, but they are not needed here.</p>
+    <p>Only differences matter. Adding ten to every rating leaves every prediction unchanged, so we fix Albion’s rating at zero. Solving the least-squares problem gives</p>
+    \[(s_A,s_B,s_C,s_D,s_E)=(0,2,3,2,1).\]
+    <p>The fitted ranking is therefore <strong>Cedar &gt; Brookfield = Dockside &gt; Eastbank &gt; Albion</strong>. These are ratings in goal-margin units, not league points. They summarize these six matches under our chosen model; they are not claims about the clubs’ true strengths.</p>
+    <div class="table-wrap"><table><caption>What the fitted ratings explain, and what remains. Residual = observed margin − fitted margin.</caption><thead><tr><th scope="col">Edge</th><th scope="col">Observed</th><th scope="col">Fitted</th><th scope="col">Residual</th></tr></thead><tbody><tr><th scope="row">AB</th><td>3</td><td>2</td><td>1</td></tr><tr><th scope="row">BC</th><td>2</td><td>1</td><td>1</td></tr><tr><th scope="row">AC</th><td>4</td><td>3</td><td>1</td></tr><tr><th scope="row">CD</th><td>1</td><td>−1</td><td>2</td></tr><tr><th scope="row">DE</th><td>1</td><td>−1</td><td>2</td></tr><tr><th scope="row">EA</th><td>1</td><td>−1</td><td>2</td></tr></tbody></table></div>
+    <p>Notice the price of compromise. Dockside beat Cedar by one goal, yet the fitted ratings put Dockside one goal below Cedar. The error on that match is two goals. We could raise Dockside’s rating to improve that prediction, but doing so would change its predicted result against Eastbank. The ratings must answer to all the matches at once.</p>
+    <p>We can verify that no adjustment helps. Subtract the fitted margins from the observations to obtain the residual:</p>
+    \[R=Y-d_0s=(1,1,1,2,2,2).\]
+    <p>Read these residual values as a flow along the arrows. At every vertex, the incoming total equals the outgoing total. Albion receives 2 along EA and sends \(1+1\) along AB and AC. Cedar receives \(1+1\) along BC and AC and sends 2 along CD. The other vertices balance as well.</p>
+    <p>Why should balance certify the best fit? Changing one team’s rating changes all its incident predicted margins. At a balanced vertex, the residuals exert equal and opposite first-order pressures on that change. In matrix language,</p>
+    \[d_0^*R=0.\]
+    <p>Here \(d_0^*\) is the transpose of \(d_0\) under the ordinary dot product: it adds incoming edge values and subtracts outgoing ones. The balance equation makes the residual perpendicular to every possible change \(d_0u\) in predicted margins:</p>
+    \[\langle R,d_0u\rangle=\langle d_0^*R,u\rangle=0.\]
+    <p>Consequently,</p>
+    \[\|Y-d_0(s+u)\|^2=\|R\|^2+\|d_0u\|^2.\]
+    <p>The extra term is nonnegative. No change in ratings can reduce the error, and because the fixture graph is connected, the ratings are unique once Albion’s value is fixed. We have extracted everything this least-squares model can express as differences of team strengths.</p>
+
+    <h2 id="triangle">4. Account for the one-goal discrepancy</h2>
+    <p>Finding the best ranking leaves us with another question: what kind of information is in the residual? We already know one thing it must contain. Subtracting score differences cannot alter a circulation, because score differences sum to zero around every loop. The original discrepancy among Albion, Brookfield, and Cedar is still there:</p>
+    \[R_{AB}+R_{BC}-R_{AC}=1+1-1=1.\]
+    <p>Let us isolate the part responsible for that triangle discrepancy. Define an operator that performs the test on any edge data \(X\):</p>
+    \[d_1X=X_{AB}+X_{BC}-X_{AC}.\]
+    <p>This is the <em>discrete curl</em>. The identity \(d_1d_0s=0\) records the cancellation we first discovered by adding the football margins.</p>
+    <p>Imagine placing an equal amount \(\Phi\) along each leg of the route A to B to C to A. In our fixed edge orientations, that produces</p>
+    \[d_1^*\Phi=(\Phi,\Phi,-\Phi,0,0,0).\]
+    <p>The minus sign is needed because the last leg runs opposite the AC arrow. This little circulation balances at each vertex, so removing it will preserve the balance of the residual. Its triangle sum is \(3\Phi\); to account for the discrepancy of one, choose \(\Phi=1/3\).</p>
+    \[c=d_1^*\Phi=(\tfrac13,\tfrac13,-\tfrac13,0,0,0).\]
+    <p>This is the triangle-flow, or <em>coexact</em>, contribution. It is not an additional match result, and its fractional values are not fractional goals scored on the pitch. Like the fitted ratings, it is a mathematical component of the integer-valued observations.</p>
+    <p>Because ABC is our only filled triangle, this accounts for every triangle discrepancy in the dataset. Subtracting it leaves</p>
+    \[h=R-c=(\tfrac23,\tfrac23,\tfrac43,2,2,2).\]
+    <p>Check the triangle once more:</p>
+    \[d_1h=\tfrac23+\tfrac23-\tfrac43=0.\]
+    <p>The one-goal mismatch has gone. The remaining data pass every available triangle test. It would be natural to think that we have now removed all the obstacles to a consistent ranking. But the vector we have left is not zero. What is it recording?</p>
+
+    <h2 id="hole">5. Take the longer way around</h2>
+    <p>Return to the fixtures involving Dockside and Eastbank. Cedar beat Albion. Dockside beat Cedar. Eastbank beat Dockside. Albion beat Eastbank. Follow that chain of victories, and you arrive back at Albion, having moved toward the winning team at every step.</p>
+    <p>In the original results, the signed margins around this route add up to</p>
+    \[Y_{AC}+Y_{CD}+Y_{DE}+Y_{EA}=4+1+1+1=7.\]
+    <p>No sequence of changes in a single rating can gain seven units and return to its starting point. Unlike the first discrepancy, this one involves four teams. Could it nevertheless be explained entirely by discrepancies in their three-team subsets?</p>
+    <p>The fixture list tells us why that argument fails. Albion have not played Dockside, and Cedar have not played Eastbank. The four-edge loop ACDEA has neither diagonal. There are no observed triangles inside it whose consistency tests we can combine. In the comparison complex, this loop surrounds a <em>hole</em>.</p>
+    <p>This is where the distinction between local and global consistency becomes concrete. The triangle test asks whether two routes between teams agree when all three comparisons are available. A longer route can disagree with a direct result even though none of the intermediate shortcuts have been observed. Testing every available triangle cannot detect every possible circulation.</p>
+    <p>Our remaining vector \(h\) makes that failure explicit. It passes the ABC test, but around the longer route it gives</p>
+    \[h_{AC}+h_{CD}+h_{DE}+h_{EA}=\tfrac43+2+2+2=\tfrac{22}{3}.\]
+    <p>So \(h\) still cannot be a collection of rating differences. It also remains balanced at every vertex. A flow with both properties—zero triangle sums and vertex balance—is called <em>harmonic</em>:</p>
+    \[d_1h=0,\qquad d_0^*h=0.\]
+    <p>The term describes precisely what is left after the best ratings and the triangle discrepancies have been removed. It is invisible to the local triangle tests, yet it carries a global obstruction to representing all the comparisons by one number per team.</p>
+    <p>Two details keep this picture honest. First, the harmonic contribution is not confined to the four edges bordering the hole. It also uses AB and BC, because vertex balance and triangle consistency have to hold together. Second, its longer-loop sum is \(22/3\), not the original 7. The triangle contribution shares AC with that route and contributes \(-1/3\), so</p>
+    \[7=-\tfrac13+\tfrac{22}{3}.\]
+    <p>Removing a triangle contribution can change another loop’s circulation. The decomposition separates perpendicular vectors in the space of all match data; it does not allocate a separate, independent correction to each visible loop.</p>
+    <p>If Albion had also played Dockside, the new AD edge would split this four-team loop into two observed triangles, ACD and ADE. Their triangle tests would together control its circulation. The same result values on the old edges would then sit in a different comparison complex. The shape of the fixture list matters because it determines which global consistency checks follow from local ones.</p>
+
+    <h2 id="hodge">6. Where Hodge theory enters</h2>
+    <p>We arrived at three pieces by asking successive questions about the matches. Which part can ratings explain? Which part is needed to account for the triangle discrepancy? What remains after both are removed? The answer is</p>
+    \[\boxed{Y=d_0s+d_1^*\Phi+h.}\]
+    <p>These are the <em>exact</em>, <em>coexact</em>, and <em>harmonic</em> parts of the data. Our calculation is a small instance of the combinatorial Hodge decomposition used in statistical ranking. <sup class="citation"><a href="#ref-ranking" aria-label="Reference 1">[1]</a></sup></p>
+    <p>The three pieces are pairwise perpendicular. Gradients are perpendicular to balanced flows by the identity used in the least-squares calculation. Triangle flows are balanced because \(d_0^*d_1^*=(d_1d_0)^*=0\). Finally, \(d_1h=0\) makes the harmonic term perpendicular to every triangle flow. Thus their squared lengths add without cross terms:</p>
+    \[\underbrace{\|Y\|^2}_{32}=\underbrace{\|d_0s\|^2}_{17}+\underbrace{\|d_1^*\Phi\|^2}_{1/3}+\underbrace{\|h\|^2}_{44/3}.\]
+    <p>The total squared residual is 15. Only \(1/3\) belongs to the triangle contribution, while \(44/3\) is harmonic. In this example, the small mismatch that first caught our attention accounts for very little of what the fitted ratings fail to explain.</p>
+    <p>For the general statement, the terminology follows the locations of the numbers. Ratings live on vertices and are called <em>0-cochains</em>. Signed match margins live on edges and are <em>1-cochains</em>. The quantities assigned to filled triangles are <em>2-cochains</em>. With real coefficients, these are finite-dimensional vector spaces connected by the operators we have already used:</p>
+    \[C^0(K;\mathbb R)\xrightarrow{d_0}C^1(K;\mathbb R)\xrightarrow{d_1}C^2(K;\mathbb R).\]
+    <p>Hodge decomposition states that the edge-data space splits as an orthogonal direct sum:</p>
+    \[C^1=\operatorname{im}d_0\oplus^{\perp}\operatorname{im}d_1^*\oplus^{\perp}(\ker d_1\cap\ker d_0^*).\]
+    <p>Here the image of an operator is the set of outputs it can produce, and its kernel is the set of inputs it sends to zero. The formula therefore says exactly what our example demonstrated: every collection of signed match margins has a unique decomposition into rating differences, triangle contributions, and a balanced, triangle-consistent remainder.</p>
+    <p>The operator that brings these two consistency conditions together is the <em>Hodge Laplacian on edges</em>,</p>
+    \[\Delta_1=d_0d_0^*+d_1^*d_1.\]
+    <p>Its zero modes are precisely the harmonic flows, since</p>
+    \[\langle X,\Delta_1X\rangle=\|d_0^*X\|^2+\|d_1X\|^2.\]
+    <p>Both nonnegative terms vanish exactly when \(X\) is balanced and has zero triangle sums. This harmonic space represents the first cohomology of the comparison complex:</p>
+    \[H^1(K;\mathbb R)=\ker d_1/\operatorname{im}d_0.\]
+    <p>In words, take edge data that pass every triangle test, and regard two such datasets as equivalent if they differ by rating differences. Each equivalence class has exactly one harmonic representative. Cohomology records the part of local consistency that cannot be reduced to a global assignment of ratings.</p>
+    <p>Our connected graph has six edges and five vertices, hence two independent graph cycles. The filled triangle ABC removes one independent cycle from first homology, leaving one hole:</p>
+    \[\beta_1=(6-5+1)-1=1.\]
+    <p>This first Betti number is also the dimension of the harmonic space. It tells us there is one independent direction in which a global inconsistency can escape all the triangle tests. It does not say the observed margins must contain such an inconsistency: if they happened to equal rating differences, their harmonic part would be zero despite the same missing fixtures.</p>
+    <blockquote><p>The fixture list determines which inconsistencies can hide from local tests. The scorelines determine whether they actually do.</p></blockquote>
+    <p>For football, the conclusion is not that rankings should be abandoned. Our least-squares problem produced a definite order, including a meaningful tie within the model. Hodge decomposition lets us accompany that order with an account of what it leaves unexplained.</p>
+    <p>The method alone cannot tell us whether the remainder comes from chance, changing team strength, home advantage, or particular tactical matchups. Nor does it turn six matches into a definitive forecast. It identifies a mathematical limitation of the summary we asked for: some patterns in pairwise results cannot be compressed into one number per team.</p>
+    <p>We began by wondering where a single goal had gone between three results. Following that discrepancy led us to the triangle. Following what remained led us around a hole. That is how topology enters a ranking problem: through the routes by which we compare teams, and the agreements those routes do—or do not—force.</p>
+
+    <section class="footnotes" aria-labelledby="references"><h2 id="references">Further reading</h2><ol class="references"><li id="ref-ranking">Xiaoye Jiang, Lek-Heng Lim, Yuan Yao, and Yinyu Ye. <a href="https://doi.org/10.1007/s10107-010-0419-x"><em>Statistical ranking and combinatorial Hodge theory</em></a>. Mathematical Programming 127 (2011), 203–244. <a href="https://arxiv.org/abs/0811.1067">Open preprint</a>. The paper develops the general ranking framework. The fictional football fixtures and the calculations in this article are an illustrative example.</li></ol></section>
+  </article>
+</div>

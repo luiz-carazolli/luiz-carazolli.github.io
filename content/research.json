@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Orbifold Quantum Cohomology",
+    "years": "2025–present",
+    "kind": "Master’s research",
+    "status": "Ongoing",
+    "institution": "University of Campinas",
+    "summary": "Master’s research on the quantum cohomology of orbifolds, at the intersection of geometry and topology.",
+    "advisors": "Prof. Dr. Lino Grama and Dr. Leonardo Cavenaghi",
+    "funding": null,
+    "report": null
+  },
+  {
+    "title": "Special Lagrangian Manifolds via Examples",
+    "years": "2024",
+    "kind": "Research internship abroad",
+    "status": "Completed",
+    "institution": "International Center for Mathematical Sciences · Bulgarian Academy of Sciences",
+    "summary": "An introduction to special Lagrangian submanifolds through concrete examples in complex Euclidean space and Calabi–Yau threefolds.",
+    "advisors": "Prof. Dr. Ludmil Katzarkov and Prof. Dr. Lino Grama",
+    "funding": "FAPESP–BEPE · Grant 2024/07883-0",
+    "report": null
+  },
+  {
+    "title": "Introduction to Symplectic Geometry",
+    "years": "2023–2024",
+    "kind": "Undergraduate research",
+    "status": "Completed",
+    "institution": "University of Campinas",
+    "summary": "Foundations of symplectic geometry, with a study of coadjoint orbits of SL(2, ℝ) and an introduction to generalized complex geometry.",
+    "advisors": "Prof. Dr. Lino Grama",
+    "funding": "FAPESP · Grant 2023/07412-4",
+    "report": null
+  },
+  {
+    "title": "Differential Forms and the Geometry of Surfaces",
+    "years": "2022–2023",
+    "kind": "Undergraduate research",
+    "status": "Completed",
+    "institution": "University of Campinas",
+    "summary": "Differential forms and Cartan’s moving-frame method, culminating in a proof of the Gauss–Bonnet theorem for surfaces.",
+    "advisors": "Prof. Dr. Lino Grama",
+    "funding": "CNPq",
+    "report": null
+  },
+  {
+    "title": "Artificial Intelligence & Deep Learning",
+    "years": "2022",
+    "kind": "Research internship",
+    "status": "Completed",
+    "institution": "GoToData",
+    "summary": "Applied research experience in deep learning, natural language processing, and deep neural networks.",
+    "advisors": null,
+    "funding": "MCTI",
+    "report": null
+  }
+]

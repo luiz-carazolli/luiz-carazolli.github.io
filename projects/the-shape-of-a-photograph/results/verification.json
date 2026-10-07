@@ -1,0 +1,26 @@
+{
+  "verified_on": "2026-10-06",
+  "rows": 20000,
+  "class_counts": {
+    "0": 10000,
+    "1": 10000
+  },
+  "holdout_images": 4000,
+  "raw_feature_and_surface_rows_checked": [
+    0,
+    9999,
+    10000,
+    19999
+  ],
+  "tabular_tensor_row_ids_aligned": true,
+  "tabular_cnn_test_indices_aligned": true,
+  "saved_prediction_labels_aligned": true,
+  "cnn_metrics_recomputed_from_saved_predictions": {
+    "accuracy": 0.747,
+    "roc_auc": 0.8403695000000002,
+    "f1": 0.76366184026156,
+    "real_recall": 0.8175,
+    "brier": 0.16568966209888458
+  },
+  "new_training_performed": false
+}

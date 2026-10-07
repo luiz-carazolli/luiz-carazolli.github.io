@@ -1,0 +1,17 @@
+# Observed environment, 6 October 2026; Python 3.14.7
+gudhi==3.13.0
+numpy==2.5.3
+pandas==3.0.5
+pyarrow==25.0.1
+pillow==12.3.0
+scipy==1.18.1
+tqdm==4.70.0
+matplotlib==3.11.1
+seaborn==0.13.2
+scikit-learn==1.9.0
+xgboost==3.4.1
+lightgbm==4.7.0
+shap==0.52.0
+torch==2.14.0
+torchvision==0.29.0
+joblib==1.6.0

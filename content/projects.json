@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "the-shape-of-a-photograph",
+    "title": "The shape of a photograph",
+    "summary": "Exploring whether cubical persistent homology can help distinguish real photographs from AI-generated images.",
+    "tags": [
+      "Topological data analysis",
+      "Machine learning",
+      "Computer vision",
+      "Python",
+      "PyTorch"
+    ],
+    "links": [
+      {
+        "label": "Explore project",
+        "url": "projects/the-shape-of-a-photograph.html"
+      },
+      {
+        "label": "Report PDF",
+        "url": "assets/projects/the-shape-of-a-photograph/report.pdf"
+      },
+      {
+        "label": "Code & workspace",
+        "url": "assets/projects/the-shape-of-a-photograph/the-shape-of-a-photograph-workspace.zip"
+      }
+    ],
+    "pending_details": false,
+    "page": "projects/the-shape-of-a-photograph.html"
+  }
+]

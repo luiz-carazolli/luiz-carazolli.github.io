@@ -1,0 +1,36 @@
+[
+  {
+    "slug": "what-is-topological-data-analysis",
+    "title": "What is topological data analysis? A comprehensive introduction",
+    "date": "2026-10-06",
+    "order": 2,
+    "published": true,
+    "category": "Topology & data",
+    "eyebrow": "Topological data analysis · Persistent homology",
+    "subtitle": "From the shape of a point cloud to persistent homology, persistence diagrams, and the images we can use in machine learning.",
+    "summary": "How do we make a computer see the shape of data? An introduction through handwritten digits, holes, and persistence images.",
+    "tags": [
+      "Topological data analysis",
+      "Persistent homology",
+      "Machine learning"
+    ],
+    "format": "A comprehensive introduction"
+  },
+  {
+    "slug": "statistical-rankings-hodge-theory",
+    "title": "When football results refuse to add up",
+    "date": "2026-10-06",
+    "order": 1,
+    "published": true,
+    "category": "Geometry & data",
+    "eyebrow": "Football · Statistical rankings · Hodge theory",
+    "subtitle": "Six matches, five teams, and a question: what can one number per team really explain? A journey from goal margins to Hodge theory.",
+    "summary": "A three-goal win, a two-goal win, and a prediction that does not add up. Follow six football matches from the search for a ranking to the holes in the fixture list.",
+    "tags": [
+      "Statistical rankings",
+      "Hodge theory",
+      "Football"
+    ],
+    "format": "A football example"
+  }
+]
