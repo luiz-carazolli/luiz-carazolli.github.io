@@ -1,0 +1,157 @@
+<div class="article-layout">
+<aside class="toc" aria-label="Article contents"><p>In this article</p><ol>
+<li><a href="#turing">01 · Turing’s question</a></li>
+<li><a href="#network">02 · A small network</a></li>
+<li><a href="#loss">03 · Loss minimization</a></li>
+<li><a href="#descent">04 · Gradient descent</a></li>
+<li><a href="#convergence">05 · Local minima</a></li>
+<li><a href="#generalization">06 · Beyond the examples</a></li>
+</ol></aside>
+<article class="prose ml-article">
+<h2 id="turing">Turing’s question</h2>
+<p>In 1950, Alan Turing opened <em>Computing Machinery and Intelligence</em> with a question that has outlived generations of computers: “Can machines think?”</p>
+<p>Rather than begin by defining thinking, he proposed an experiment involving written questions and answers, shifting attention toward behavior that another person could observe. His original imitation game involved an interrogator distinguishing a man from a woman, with the man attempting to mislead the interrogator; Turing then asked what would happen if a machine took his place. This became the basis of the familiar Turing test, in which an interrogator attempts to distinguish a human from a machine through conversation. <a href="https://doi.org/10.1093/mind/LIX.236.433">Turing (1950), §1, <em>Mind</em> 59(236), 433–460</a></p>
+<figure class="ml-history"><div class="ml-history-images"><img src="../assets/machine-learning/alan-turing-1951.jpg" alt="Portrait of Alan Turing by Elliott &amp; Fry, 29 March 1951" width="800" height="1067" loading="lazy"><a href="https://doi.org/10.1093/mind/LIX.236.433"><img src="../assets/machine-learning/turing-paper-excerpt.png" alt="Title and opening question from the first page of Turing’s 1950 paper in Mind" width="910" height="778" loading="lazy"></a></div><figcaption>Alan Turing, photographed by Elliott &amp; Fry in 1951 (<a href="https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg">Wikimedia Commons; public domain</a>), beside a cropped excerpt of the title and opening question from <a href="https://doi.org/10.1093/mind/LIX.236.433">Turing (1950), p. 433</a>. Paper scan via the <a href="https://www.cs.toronto.edu/~frank/csc2501/Readings/R1_Turing/Turing-1950.pdf">University of Toronto / JSTOR</a>; journal published by Oxford University Press.</figcaption></figure>
+<p>The experiment brings an uncomfortable asymmetry into view: although we experience our own thinking directly, we infer other people’s thinking from what they say and do. When someone explains a proof, recognizes a mistake, or adapts an argument to an objection, we treat that behavior as evidence of understanding, even though we cannot inspect the experience behind it. What should happen when a machine produces comparable evidence?</p>
+<p>Turing himself connected these questions when he proposed developing a machine that could be educated, comparing the project to teaching a child rather than directly programming an adult mind. <a href="https://doi.org/10.1093/mind/LIX.236.433">Turing (1950), §7</a></p>
+<p>One aspect of this larger question is learning, and we can make progress by examining how a machine improves through minimizing a loss function, without expecting that account alone to settle what thinking means.</p>
+
+<h2 id="network">A small network</h2>
+<p>To understand what learning can mean for a machine, we can begin with a smaller ambition than conversation: predicting whether a cyclist can complete an unfamiliar climb without stopping.</p>
+<p>Suppose we have records of previous attempts by the same cyclist, including the length of each climb, its average gradient, and whether the cyclist reached the top without a break. We would like to use those observations to predict the outcome of a new attempt, assuming reasonably comparable riding conditions.</p>
+<p>As an illustrative approximation, suppose completion depends strongly on total elevation gained, which for a moderate gradient is approximately the product of distance \(d\) and gradient \(g\). A rough feasibility boundary might then have the form</p>
+\[dg\approx C,\]
+<p>where \(C\) represents a threshold characteristic of the cyclist under the conditions considered. In the positive, unstandardized \((d,g)\)-plane, the boundary \(dg=C\) is a hyperbola, so the effect of increasing distance depends on the gradient at which that increase occurs.</p>
+<p>A linear score \(ad+bg+c\) has straight-line level sets and cannot represent this boundary exactly across the input domain. We could supply the product \(dg\) as an additional descriptor if we already knew that it captured the relevant relationship, but here we will allow the model to construct nonlinear combinations from the original measurements.</p>
+<p>This threshold is only a motivating approximation, since fatigue, weather, pacing, and road conditions introduce variation even between otherwise similar climbs. A probability is therefore a more sensible output than a categorical promise of success or failure.</p>
+<p>Let</p>
+\[x=\begin{pmatrix}x_1\\x_2\end{pmatrix}\]
+<p>be the standardized pair \((d,g)\), so that the climb’s length and average gradient have comparable numerical scales, and let the observed outcome be</p>
+\[y=\begin{cases}1,&\text{the cyclist completes the climb without stopping},\\0,&\text{otherwise}.\end{cases}\]
+<p>These measurements are our initial descriptors, also called features, and they determine which information the model can use. If we provide no information about fatigue, for example, the model cannot directly distinguish a well-rested attempt from an otherwise identical attempt after a demanding ride.</p>
+<figure><!-- figure:ml-feasibility.svg --><figcaption>Illustrative attempts in the unstandardized distance–gradient plane. The curve \(dg=0.3\,\mathrm{km}\) corresponds to approximately 300 m of elevation gain; the dashed line is a linear comparison. This is a motivating approximation, not a physiological law or a measured dataset.</figcaption></figure>
+<p>We now need a prediction rule that combines the descriptors and returns a probability, for which weighted sums provide useful building blocks. To introduce nonlinear behavior, we construct two intermediate descriptors:</p>
+\[z_1=\tanh(w_{11}x_1+w_{12}x_2+b_1),\]
+\[z_2=\tanh(w_{21}x_1+w_{22}x_2+b_2).\]
+<p>Each takes a different weighted combination of the original measurements and passes it through the hyperbolic tangent, a nonlinear function that smoothly compresses its input into the interval \((-1,1)\). We then combine these quantities,</p>
+\[s=v_1z_1+v_2z_2+c,\]
+<p>and convert the result into a probability using the sigmoid function:</p>
+\[p_\theta(x)=\sigma(s)=\frac{1}{1+e^{-s}},\]
+<p>where \(\theta\) collects all nine adjustable parameters:</p>
+\[\theta=(w_{11},w_{12},w_{21},w_{22},b_1,b_2,v_1,v_2,c).\]
+<p>The entries of \(W=(w_{jk})\) and \(v\) are weights, while \(b_1,b_2,c\) are biases.</p>
+<p>This construction is a small neural network with two inputs, two hidden units, and one output. Mathematically, it is a composition of elementary functions whose parameters determine which relationships it represents, including curved decision boundaries, although such a small network still has limited expressive power.</p>
+<p>The intermediate descriptors \(z_1\) and \(z_2\) are not predefined concepts such as “difficulty” or “endurance demand,” because their definitions depend on parameters that will change during training. The model can adjust both what these descriptors respond to and how their responses influence its final prediction.</p>
+<figure><!-- figure:ml-network.svg --><figcaption>Two standardized inputs, two tanh hidden units, and one sigmoid output. The four input weights form \(W\); the two output weights form \(v\). Together with the three biases, the network has nine trainable parameters.</figcaption></figure>
+
+<h2 id="loss">Learning as loss minimization</h2>
+<p>We have specified a family of prediction rules, but we have not yet selected a useful member of that family. With arbitrary parameters, the network might assign an easy climb a low success probability and a difficult climb a high one, illustrating that an architecture capable of useful behavior does not automatically produce it.</p>
+<p>The recorded attempts must guide our choice of parameters, which means we need a way to compare how well different parameter choices explain the observed outcomes.</p>
+<p>For a single attempt, the probability assigned to the outcome that actually occurred is</p>
+\[P_\theta(y\mid x)=p_\theta(x)^y\left(1-p_\theta(x)\right)^{1-y}.\]
+<p>For \(y=1\), this expression equals \(p_\theta(x)\), whereas for \(y=0\), it equals \(1-p_\theta(x)\). If we model the attempts as conditionally independent given their descriptors and the parameters, their joint likelihood is</p>
+\[\mathcal L(\theta)=\prod_{i=1}^{n}p_\theta(x_i)^{y_i}\left(1-p_\theta(x_i)\right)^{1-y_i}.\]
+<p>We would like to choose parameters that make the observations collectively more probable, which suggests maximizing this likelihood. Taking its logarithm preserves the maximizers while converting the product into a sum, and changing the sign converts maximization into minimization.</p>
+<p>After dividing by the number of examples, we obtain</p>
+\[L(\theta)=-\frac{1}{n}\sum_{i=1}^{n}\left[y_i\log p_\theta(x_i)+(1-y_i)\log\left(1-p_\theta(x_i)\right)\right].\]
+<p>The contribution of a single example,</p>
+\[\ell(p,y)=-y\log p-(1-y)\log(1-p),\]
+<p>is called binary cross-entropy, and it provides the loss function we need.</p>
+<p>For a successful attempt, the loss is \(-\log p\), which approaches zero as the predicted success probability approaches one and grows without bound as that probability approaches zero. For a failed attempt, the roles reverse, so confidently assigning almost no probability to the observed outcome always produces a large penalty.</p>
+<figure><!-- figure:ml-cross-entropy.svg --><figcaption>Binary cross-entropy uses natural logarithms. The solid curve is the loss after success (\(y=1\)); the dashed curve is the loss after failure (\(y=0\)). Markers show predictions of 0.1, 0.5, and 0.9.</figcaption></figure>
+<p>We can now state what learning means in this example:</p>
+<p class="ml-highlight">Learning is adjusting the model’s parameters to reduce its loss.</p>
+<p>The architecture determines which prediction rules are available, the data provide examples against which those rules can be evaluated, and the loss defines what counts as an improvement. Training is the procedure that searches for parameter values producing better predictions according to that criterion.</p>
+<p>The machine receives neither the correct parameters nor a separate instruction for every possible climb; instead, it receives examples, a measure of prediction quality, and a procedure for adjusting its parameters in response to that measure.</p>
+<p>It is useful here to distinguish two functions that play different roles. With the parameters held fixed, the prediction function maps a climb to a probability:</p>
+\[x\longmapsto p_\theta(x).\]
+<p>With the dataset held fixed, the loss function maps a choice of parameters to a measure of prediction quality:</p>
+\[\theta\longmapsto L(\theta).\]
+<p>Learning takes place in this second space, where every point represents a complete prediction rule and moving to a different point changes how the model responds to its inputs.</p>
+<figure><div class="ml-panel-grid"><!-- figure:ml-input-space.svg --><!-- figure:ml-parameter-space.svg --></div><figcaption>Two different spaces: the input plane contains possible climbs, while parameter space contains possible models. Left: an illustrative probability field based on elevation gain. Right: schematic loss contours, not a computed slice of this network.</figcaption></figure>
+
+<h2 id="descent">Gradient descent in numbers</h2>
+<p>The remaining problem is to decide how to move through parameter space, since knowing that the current parameters perform poorly does not tell us which alternative to try.</p>
+<p>Our network is nonlinear in its trainable parameters, so setting all derivatives of the loss to zero produces a coupled nonlinear system without a general closed-form solution comparable to the normal equations of linear least squares. We turn to numerical optimization, using derivatives to determine how small changes in the parameters affect the loss.</p>
+<p>At the current parameters \(\theta\), the gradient is</p>
+\[\nabla L(\theta)=\begin{pmatrix}\frac{\partial L}{\partial\theta_1}\\\vdots\\\frac{\partial L}{\partial\theta_9}\end{pmatrix},\]
+<p>whose components measure how the loss changes locally as we vary each parameter while holding the others fixed. The first-order Taylor approximation makes this relationship explicit:</p>
+\[L(\theta+\Delta\theta)\approx L(\theta)+\nabla L(\theta)^\top\Delta\theta.\]
+<p>Among displacements of a fixed small Euclidean length, the direction opposite to the gradient produces the greatest decrease in this linear approximation. Choosing</p>
+\[\Delta\theta=-\eta\nabla L(\theta)\]
+<p>gives the update rule</p>
+\[\boxed{\theta_{k+1}=\theta_k-\eta\nabla L(\theta_k),}\]
+<p>where the positive number \(\eta\), called the learning rate, controls the size of the adjustment.</p>
+<p class="ml-highlight">Gradient descent learns by repeatedly moving the parameters in a direction that locally reduces the loss.</p>
+<p>Substituting the update into the Taylor approximation gives</p>
+\[L(\theta_{k+1})\approx L(\theta_k)-\eta\|\nabla L(\theta_k)\|^2,\]
+<p>which explains why a sufficiently small step decreases the loss whenever the gradient is nonzero. The qualification about step size matters because the approximation is local: a direction that initially goes downhill may eventually lead uphill if we move too far.</p>
+<figure><div class="ml-panel-grid"><!-- figure:ml-descent-direction.svg --><!-- figure:ml-descent-steps.svg --></div><figcaption>Gradient descent on the illustrative quadratic \(q(u)=u^2/2\). Left: the gradient points uphill, so its negative points toward the minimum. Right: steps with \(\eta=0.5\) approach zero, while \(\eta=2.2\) overshoots with growing magnitude. These are computed examples, not trajectories of the network.</figcaption></figure>
+<p>For our network, the derivatives reveal how a discrepancy at the output influences the individual parameters. Considering a single example and writing \(p=\sigma(s)\), the combination of sigmoid and cross-entropy gives the identity</p>
+\[\frac{\partial\ell}{\partial s}=p-y.\]
+<p>Applying the chain rule to the output weights gives</p>
+\[\frac{\partial\ell}{\partial v_j}=(p-y)z_j,\]
+<p>while applying it through the hidden units gives</p>
+\[\frac{\partial\ell}{\partial w_{jk}}=(p-y)v_j(1-z_j^2)x_k.\]
+<p>The bias derivatives are correspondingly</p>
+\[\frac{\partial\ell}{\partial c}=p-y,\qquad\frac{\partial\ell}{\partial b_j}=(p-y)v_j(1-z_j^2).\]
+<p>Each update therefore depends on the prediction error, the input descriptors, and the model’s current internal responses, with averaging over examples producing the derivatives of the full training loss.</p>
+<p>Backpropagation computes these derivatives efficiently through the composition of functions, while gradient descent uses them to update the parameters. Together, they implement a cycle in which the model makes predictions, evaluates their loss, and adjusts its parameters before trying again.</p>
+<p>To see one complete step numerically, consider a successful attempt with standardized descriptors \(x=(1,1)^\top\) and choose the initial parameters</p>
+\[W=\begin{pmatrix}0.5&0\\0&0.5\end{pmatrix},\qquad b=\begin{pmatrix}0\\0\end{pmatrix},\qquad v=\begin{pmatrix}1\\1\end{pmatrix},\qquad c=0.\]
+<p>These values are deliberately arbitrary; they describe an initial model before learning has made its responses useful. The forward pass gives</p>
+\[z_1=z_2=\tanh(0.5)\approx0.4621,\]
+\[s=z_1+z_2\approx0.9242,\qquad p=\sigma(s)\approx0.7159.\]
+<p>Since the observed outcome is \(y=1\), the loss is</p>
+\[\ell=-\log(0.7159)\approx0.3342,\]
+<p>and the output error is \(p-y\approx-0.2841\). Substituting into the derivative formulas gives</p>
+\[\nabla_W\ell\approx\begin{pmatrix}-0.2234&-0.2234\\-0.2234&-0.2234\end{pmatrix},\qquad\nabla_b\ell\approx\begin{pmatrix}-0.2234\\-0.2234\end{pmatrix},\]
+\[\nabla_v\ell\approx\begin{pmatrix}-0.1313\\-0.1313\end{pmatrix},\qquad\frac{\partial\ell}{\partial c}\approx-0.2841.\]
+<p>The four entries of \(\nabla_W\ell\) coincide because \(x_1=x_2\) and the two hidden units agree in both \(v_j\) and \(z_j\). With learning rate \(\eta=0.1\), one simultaneous update produces</p>
+\[\begin{aligned}
+W_{\mathrm{new}}&\approx\begin{pmatrix}0.5223&0.0223\\0.0223&0.5223\end{pmatrix},&
+b_{\mathrm{new}}&\approx\begin{pmatrix}0.0223\\0.0223\end{pmatrix},\\[6pt]
+v_{\mathrm{new}}&\approx\begin{pmatrix}1.0131\\1.0131\end{pmatrix},&
+c_{\mathrm{new}}&\approx0.0284.
+\end{aligned}\]
+<p>Passing the same input through the updated network gives</p>
+\[p_{\mathrm{new}}\approx0.7443,\qquad\ell_{\mathrm{new}}\approx0.2954.\]
+<p>The model now assigns a higher probability to the outcome that occurred, and its loss on this example has decreased. For a dataset containing only this observation, this is a full gradient-descent step; for a larger dataset, it is a stochastic gradient step based on one example, which need not decrease the loss on every other observation.</p>
+<figure><!-- figure:ml-numerical-step.svg --><figcaption>One simultaneous parameter update on the successful attempt. The probability of the observed outcome increases, and its cross-entropy decreases. Values are computed with unrounded parameters and rounded only for display.</figcaption></figure>
+
+<h2 id="convergence">Local minima and convergence</h2>
+<p>As training continues, it is natural to imagine the parameters approaching the bottom of a valley, where further small changes offer no improvement. For this network, however, the loss need not be convex, and its parameterization already contains symmetries that help explain why its geometry can be complicated.</p>
+<p>Swapping the two hidden units leaves every prediction unchanged, as does independently replacing a hidden unit’s parameters \((w_j,b_j,v_j)\) by \((-w_j,-b_j,-v_j)\), because \(\tanh\) is odd; these transformations give a generic orbit of \(2!\,2^2=8\) equivalent parameter vectors.</p>
+<p>Symmetry alone does not prove nonconvexity, but the one-observation dataset in our numerical example supplies a direct demonstration: simultaneously flipping both hidden units gives another parameter vector with the same loss \(0.3342\), while the midpoint between the two vectors has all parameters zero and loss \(\log 2\approx0.6931\), violating the convexity inequality. This zero-parameter midpoint has average loss \(\log 2\) on any dataset, but the endpoint loss used in this demonstration is specific to our one-observation dataset.</p>
+<p>These symmetric copies represent exactly the same prediction function and have equal loss; they should not be confused with poor local minima, which have higher loss than a better solution elsewhere.</p>
+<p>A point \(\theta^\star\) is a local minimum if there is some neighborhood around it in which</p>
+\[L(\theta^\star)\leq L(\theta),\]
+<p>whereas a global minimum satisfies this inequality throughout the entire parameter space. Because gradient descent uses local information, different starting points can lead it toward different regions, with no general guarantee of finding a globally best solution.</p>
+<p class="ml-highlight">If gradient descent reaches a local minimum, that minimum need not be global.</p>
+<p>Before stating a convergence claim, we should address a complication of our classification problem: if the network can separate the recorded outcomes, its parameters may grow while its predictions approach zero and one, causing the loss to approach an infimum that is never attained at finite parameter values.</p>
+<p>We can discourage this growth by adding a penalty on all parameters and training against the regularized objective</p>
+\[J(\theta)=L(\theta)+\frac{\lambda}{2}\|\theta\|^2,\qquad\lambda>0.\]
+<p>Since \(L\geq0\), the function \(J\) tends to infinity as \(\|\theta\|\) grows, so its sublevel sets are compact. \(J\) is smooth for a finite dataset, so its gradient is Lipschitz on a compact neighborhood of the sublevel set.</p>
+<p>These properties provide the setting for a precise convergence statement: gradient descent on \(J\), with standard Armijo backtracking to select acceptable step sizes, satisfies</p>
+\[\|\nabla J(\theta_k)\|\longrightarrow0.\]
+<p>The update now uses</p>
+\[\nabla J(\theta)=\nabla L(\theta)+\lambda\theta,\]
+<p>so it combines the pressure to fit the observations with the pressure to keep parameter magnitudes controlled.</p>
+<p>A vanishing gradient identifies stationarity, which does not by itself establish convergence to a local minimum or even convergence of the entire parameter sequence. Saddle points can also have zero gradient, although near a minimum with a positive-definite Hessian, sufficiently small steps give the familiar local convergence behavior.</p>
+<figure><!-- figure:ml-local-minima.svg --><figcaption>A schematic landscape based on \(F(u,v)=(u^2-1)^2+0.3u+v^2\), showing two minima of unequal value and a saddle between them. The arrows indicate descent from different starting regions. These are not symmetry-related copies, and this is not a computed landscape of our network.</figcaption></figure>
+
+<h2 id="generalization">Learning beyond the examples</h2>
+<p>To say that a machine learns by minimizing a loss means that learning has been formulated as an optimization problem, with gradient descent providing a procedure for seeking better parameters. It does not mean that training always reaches the smallest mathematically possible value, nor that a low training loss automatically implies useful learning.</p>
+<p>The cyclist wants a prediction for a climb they have not yet attempted, so a model that performs well only on recorded attempts has not fulfilled its purpose. We consequently evaluate the model on held-out examples, using validation data to guide development while keeping a final test set separate from those decisions.</p>
+<p>The distinction can be written mathematically by comparing our finite training loss with the expected predictive loss on the distribution \(P\) of future attempts:</p>
+\[R(\theta)=\mathbb E_{(x,y)\sim P}\left[\ell\bigl(p_\theta(x),y\bigr)\right].\]
+<p>We minimize a computable training objective in the hope of reducing this expected loss, but whether that hope is justified depends on the observations available, the model we chose, and how closely future conditions resemble those represented in the data.</p>
+<p class="ml-highlight">Useful learning carries information from past examples into new situations.</p>
+<p>This capacity is called generalization, and it explains why fitting the training data is only part of the task. Once training is complete, the parameters can remain fixed while the model predicts new outcomes, so making a prediction uses what has been learned without necessarily producing further learning.</p>
+<figure><div class="ml-panel-grid"><!-- figure:ml-training.svg --><!-- figure:ml-prediction.svg --></div><figcaption>Training uses observations to measure a loss, compute derivatives, and update the parameters. Prediction uses the fitted parameters on a new climb, without changing them.</figcaption></figure>
+<p>We can now return to the cyclist as a human learner, recalling previous climbs, weighing their length and steepness, and revising expectations after an unexpectedly difficult attempt. At this level of description, the resemblance is apparent: experience changes how information influences a judgment, and the discrepancy between expectation and outcome helps guide that change.</p>
+<p>A student learning mathematics may undergo a comparable adjustment when a failed proof reveals that the features they initially noticed were misleading. As they learn to attend to compactness, symmetry, or the strength of a hypothesis, they seem to be revising both their descriptors and the importance assigned to them, much as our network changes its intermediate representations and parameters.</p>
+<p>This resemblance does not establish that human learning implements gradient descent, but it makes the philosophical comparison more precise by directing attention to error signals, the mechanisms of adjustment, and what determines which outcomes matter. Human learners can also reconsider their objectives, moving from a desire to pass an exam toward a desire to understand, which raises a further question about how the purposes of learning are themselves acquired.</p>
+<p>Knowing a machine’s learning mechanism explains how its behavior changes, but does not by itself settle whether that behavior deserves to be called thinking.</p>
+<p><strong>How different is a machine learning from a human learning, and which differences matter for thinking?</strong></p>
+</article></div>

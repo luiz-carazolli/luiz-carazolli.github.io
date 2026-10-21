@@ -1,5 +1,18 @@
 [
   {
+    "slug": "what-it-means-for-a-machine-to-learn",
+    "title": "What It Means for a Machine to Learn",
+    "date": "2026-10-21",
+    "order": 3,
+    "published": true,
+    "category": "Learning & optimization",
+    "eyebrow": "Machine learning · Gradient descent · Turing",
+    "subtitle": "A small network, gradient descent, and Turing's question",
+    "summary": "What changes when a machine learns? A small neural network connects prediction, loss minimization, and gradient descent with Turing’s question about thinking.",
+    "tags": ["Machine learning", "Gradient descent", "Neural networks"],
+    "format": "A worked mathematical example"
+  },
+  {
     "slug": "what-is-topological-data-analysis",
     "title": "What is topological data analysis? A comprehensive introduction",
     "date": "2026-10-06",

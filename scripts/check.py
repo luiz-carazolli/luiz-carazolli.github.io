@@ -47,9 +47,10 @@ for post in published:
     slug=post['slug']
     blog=(ROOT/f'blog/{slug}.html').read_text()
     source=(ROOT.parent/f'content/posts/{slug}.html').read_text()
-    expected=len(re.findall(r'\\\(|\\\[',source))
+    # An aligned row break such as \\[6pt] is not a new display delimiter.
+    expected=len(re.findall(r'(?<!\\)\\(?:\(|\[)',source))
     assert blog.count('class="katex-mathml"')==expected, f'Equation count mismatch: {slug}'
-    assert 'katex-error' not in blog and r'\[' not in blog and r'\(' not in blog
+    assert 'katex-error' not in blog and not re.search(r'(?<!\\)\\(?:\(|\[)',blog)
     assert f'href="blog/{slug}.html"' in index, f'Post absent from index: {slug}'
     equations+=expected
 newest=max(published,key=lambda p:(p['date'],p.get('order',0)))
@@ -75,4 +76,6 @@ for (i,j),v in zip(edges,h):balance[i]-=v;balance[j]+=v
 assert balance==[0]*5
 assert sum(h[2:])==F(22,3)
 assert [dot(v,v) for v in [y,g,c,h]]==[F(32),F(17),F(1,3),F(44,3)]
-print(f'Passed: {len(pages)} pages, local links, anchors, assets, {equations} compiled formulas, latest-post feature, digit homology, and exact Hodge decomposition.')
+from generate_learning_figures import verify_example
+verify_example()
+print(f'Passed: {len(pages)} pages, local links, anchors, assets, {equations} compiled formulas, latest-post feature, digit homology, exact Hodge decomposition, and neural-network gradients and symmetries.')
