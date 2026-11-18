@@ -90,11 +90,21 @@
 </div>
 
 <h3 id="accuracy-across-backgrounds">How accuracy changes with the background</h3>
+<figure>
+  <img src="../assets/clever-hans/test-accuracy.png" alt="Aligned accuracy remains near 100% as the preferred color becomes more frequent in training, while independent and swapped accuracy fall steeply near p = 1." width="1022" height="597" loading="lazy" style="max-width:100%;height:auto">
+  <figcaption>Test accuracy for the aligned, independent, and swapped backgrounds. Points show means across three runs, and shading spans the lowest and highest run values.</figcaption>
+</figure>
+
 <p>When we trained with independent colors at <var>p</var> = 0.10, accuracy was about 98.6% under all three test conditions, and swapping the background changed fewer than three predictions in a thousand. The same digit images gave a very different result as we made color more predictive during training. At <var>p</var> = 0.95, the networks still classified 99.64% of the aligned images correctly, but that number dropped to 86.12% on swapped backgrounds. Raising <var>p</var> to 0.99 brought aligned accuracy slightly higher, to 99.86%, while swapped accuracy fell to 60.87%.</p>
 
 <p>At <var>p</var> = 1.00, every training digit appeared on its preferred background, and all three runs achieved 100% on the aligned images and 0% on the swapped ones. The independent condition gave 13.25% accuracy on average, consistent with an evaluation in which the color is sometimes helpful by chance, while the swapped version always gives the digit a color that was associated with a different label during training. An evaluation using only the aligned images would have ranked the model trained with the strongest color association highest, even though it was the least reliable when the same digits appeared on different backgrounds.</p>
 
 <h3 id="where-predictions-go">Which digit does the model predict after a swap?</h3>
+<figure>
+  <img src="../assets/clever-hans/flip-rates.png" alt="Overall and targeted flip rates rise with the strength of the training association, reaching 100% and 95.71% respectively at p = 1." width="1022" height="597" loading="lazy" style="max-width:100%;height:auto">
+  <figcaption>Prediction changes between aligned and swapped backgrounds. Overall flips count any change, and targeted flips count changes to the label associated with the new color among initially correct predictions. Shading spans the lowest and highest values across the three runs.</figcaption>
+</figure>
+
 <p>A drop in accuracy tells us that changing the background affects the predictions, but the new predictions also tell us something about how the model uses the cue. At <var>p</var> = 0.99, 33.35% of the digits the models got right on their aligned backgrounds switched specifically to the digit associated with the swapped color. At <var>p</var> = 1.00, every prediction changed, and 95.71% switched to the label that the new color had indicated in training. The remaining changes went to other incorrect classes, so following the color describes the dominant behavior in this setting.</p>
 
 <p>For example, in one of the runs, the model trained at <var>p</var> = 0.99 correctly classified a particular handwritten 9 on its preferred background, then called it a 4 when we gave it the background associated with 4. In the same run, a handwritten 7 remained a 7 under the swap at <var>p</var> = 0.99, but the model trained at <var>p</var> = 1.00 called it a 2 on the background assigned to 2. These examples show how the color cue can determine one prediction while the handwriting still carries enough weight to preserve another, even at the same level of training bias.</p>
