@@ -29,6 +29,8 @@
 <h2 id="experiment">An experiment with handwritten digits</h2>
 <p>Suppose we are training a model to recognize handwritten digits, and most of the 7s we show it are on blue backgrounds. When we give the model a new blue 7 and it predicts 7, we face the same difficulty as someone watching Hans tap his hoof. The handwriting and the background both point toward the same answer, so a correct prediction leaves us wondering how much each contributed. With an image, though, we can keep the handwriting exactly as it is and change the background to the color usually associated with a 2. If the model now predicts 2, we know which part of the image changed and why that particular wrong answer is interesting.</p>
 
+<p>The full experimental protocol, code, and detailed analysis are available in the <a href="https://github.com/luiz-carazolli/colored-mint-shortcuts">Colored MNIST shortcuts repository</a>.</p>
+
 <h3 id="training-data">Giving each digit a preferred color</h3>
 <p>We will use <a href="https://github.com/cvdfoundation/mnist">MNIST</a>, a dataset of handwritten digits from 0 to 9, each recorded as a 28-by-28 grayscale image. We will use the grayscale values to draw each digit in white over a solid background, preserving the shape and the antialiased edges of its strokes. The backgrounds have different hues but the same target lightness, so the digits have comparable contrast across the palette. We will split the original images before adding any color, using 54,000 digits for training, 6,000 for validation, and the 10,000 images in the official test set for the final evaluation. This keeps different recolorings of the same handwriting from crossing between splits.</p>
 
