@@ -1,5 +1,22 @@
 [
   {
+    "slug": "clever-hans",
+    "title": "Can horses do arithmetic? The problem of shortcut learning",
+    "date": "2026-11-18",
+    "order": 4,
+    "published": true,
+    "category": "Learning & optimization",
+    "eyebrow": "Machine learning · Shortcut learning · MNIST",
+    "subtitle": "An experiment with handwritten digits and the backgrounds a model learns to rely on",
+    "summary": "Can a neural network recognize a handwritten digit by its background? A controlled MNIST experiment shows how a spurious correlation can become a shortcut.",
+    "tags": [
+      "Machine learning",
+      "Shortcut learning",
+      "MNIST"
+    ],
+    "format": "A controlled experiment"
+  },
+  {
     "slug": "what-it-means-for-a-machine-to-learn",
     "title": "What It Means for a Machine to Learn",
     "date": "2026-10-21",
