@@ -67,4 +67,40 @@
 <p>At <var>p</var> = 0.10, we expect the model to rely mostly on the handwriting, since each background is equally likely for every digit during training. Its accuracy should therefore be similar across the three versions, and recoloring a correctly classified 7 should rarely turn its prediction into a 2 just because we gave it the color assigned to 2. As <var>p</var> increases, we expect accuracy on the aligned images to stay high, since both cues agree there. Accuracy on independent and swapped backgrounds should fall if the model comes to rely more on color, and we expect targeted flips to become more frequent because the swapped colors consistently point to specific wrong labels.</p>
 
 <p>We might also expect the swapped condition to be harder than the independent one, since an independent color will sometimes agree with the shape, whereas a swapped color always points to another class. How quickly the gap opens is harder to predict. Handwritten digits are recognizable by shape, and even an uncommon mismatched background gives the model an example of the same shape on a different color. We could therefore see the model hold up over much of the sweep and become sensitive to recoloring only when those examples are very rare. Comparing the paired predictions across training settings will let us see how much evidence of this kind the model needs for its predictions to hold up when the background changes.</p>
+
+<h2 id="results">What the models learned</h2>
+<p>Across the 21 training runs, the result depended on which version of the test images we used. When each digit appeared on its preferred background, accuracy increased as the association between digit and color grew stronger in training. When we changed the backgrounds, the trend went in the other direction, and the difference between the two scores became especially large in the last two settings. The table shows the mean across the three runs at each value of <var>p</var>, with every run evaluated on the same 10,000 test digits.</p>
+
+<div style="overflow-x:auto">
+  <table>
+    <caption>Test accuracy and prediction changes across the seven training conditions</caption>
+    <thead>
+      <tr><th scope="col"><var>p</var></th><th scope="col">Aligned accuracy</th><th scope="col">Independent accuracy</th><th scope="col">Swapped accuracy</th><th scope="col">Overall flips</th><th scope="col">Targeted flips</th></tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">0.10</th><td>98.58%</td><td>98.55%</td><td>98.55%</td><td>0.28%</td><td>0.02%</td></tr>
+      <tr><th scope="row">0.50</th><td>99.07%</td><td>98.08%</td><td>97.38%</td><td>1.83%</td><td>0.79%</td></tr>
+      <tr><th scope="row">0.70</th><td>99.27%</td><td>97.29%</td><td>95.98%</td><td>3.44%</td><td>1.89%</td></tr>
+      <tr><th scope="row">0.85</th><td>99.45%</td><td>95.36%</td><td>92.89%</td><td>6.70%</td><td>4.48%</td></tr>
+      <tr><th scope="row">0.95</th><td>99.64%</td><td>90.58%</td><td>86.12%</td><td>13.67%</td><td>10.28%</td></tr>
+      <tr><th scope="row">0.99</th><td>99.86%</td><td>71.45%</td><td>60.87%</td><td>39.07%</td><td>33.35%</td></tr>
+      <tr><th scope="row">1.00</th><td>100.00%</td><td>13.25%</td><td>0.00%</td><td>100.00%</td><td>95.71%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="accuracy-across-backgrounds">How accuracy changes with the background</h3>
+<p>When we trained with independent colors at <var>p</var> = 0.10, accuracy was about 98.6% under all three test conditions, and swapping the background changed fewer than three predictions in a thousand. The same digit images gave a very different result as we made color more predictive during training. At <var>p</var> = 0.95, the networks still classified 99.64% of the aligned images correctly, but that number dropped to 86.12% on swapped backgrounds. Raising <var>p</var> to 0.99 brought aligned accuracy slightly higher, to 99.86%, while swapped accuracy fell to 60.87%.</p>
+
+<p>At <var>p</var> = 1.00, every training digit appeared on its preferred background, and all three runs achieved 100% on the aligned images and 0% on the swapped ones. The independent condition gave 13.25% accuracy on average, consistent with an evaluation in which the color is sometimes helpful by chance, while the swapped version always gives the digit a color that was associated with a different label during training. An evaluation using only the aligned images would have ranked the model trained with the strongest color association highest, even though it was the least reliable when the same digits appeared on different backgrounds.</p>
+
+<h3 id="where-predictions-go">Which digit does the model predict after a swap?</h3>
+<p>A drop in accuracy tells us that changing the background affects the predictions, but the new predictions also tell us something about how the model uses the cue. At <var>p</var> = 0.99, 33.35% of the digits the models got right on their aligned backgrounds switched specifically to the digit associated with the swapped color. At <var>p</var> = 1.00, every prediction changed, and 95.71% switched to the label that the new color had indicated in training. The remaining changes went to other incorrect classes, so following the color describes the dominant behavior in this setting.</p>
+
+<p>For example, in one of the runs, the model trained at <var>p</var> = 0.99 correctly classified a particular handwritten 9 on its preferred background, then called it a 4 when we gave it the background associated with 4. In the same run, a handwritten 7 remained a 7 under the swap at <var>p</var> = 0.99, but the model trained at <var>p</var> = 1.00 called it a 2 on the background assigned to 2. These examples show how the color cue can determine one prediction while the handwriting still carries enough weight to preserve another, even at the same level of training bias.</p>
+
+<h3 id="why-the-shortcut-emerges">What the experiment shows about spurious correlations</h3>
+<p>There are two changes in the experiment that let us connect the training association to the shortcut. During training, we changed how often each background accompanied its preferred digit while keeping the handwriting examples, network architecture, and training budget fixed. During testing, we changed the background of each image while holding the underlying handwriting and its true label fixed. When the training colors were independent of the labels, the models handled the very same swapped images with high accuracy and rarely predicted the label associated with the new color. As the training association strengthened, recoloring increasingly pushed predictions toward the class that the new color had predicted during training.</p>
+
+<p>Together, those comparisons show that the spurious correlation increased the models’ reliance on color in this experiment. The association was introduced by the way we colored the training images, and it was strong enough to make an incorrect answer predictable when we changed only the background. The biggest losses occurred at the high end of the sweep, where examples that broke the association were scarce or entirely absent. With seven settings, one architecture, and one fixed rule for swapping colors, the experiment establishes the pattern for this setup while leaving open how sharply the change would occur with a finer sweep or a different training procedure.</p>
 </article>
